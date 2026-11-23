@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafetería Aroma — Contacto</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="imagen/icons8-estrella-64.png">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1>Cafetería Aroma</h1>
+    <button class="menu-toggle">☰ Menú</button>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="menu.html">Menú</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Contáctanos</h2>
+      <p>
+        ¿Tienes alguna pregunta o quieres reservar una mesa? Escríbenos o
+        visítanos en nuestra tienda.
+      </p>
+
+      <ul>
+        <li><strong>Dirección:</strong> Calle 5ta, Ciudad de Panamá</li>
+        <li><strong>Teléfono:</strong> 6000-0000</li>
+        <li><strong>Correo:</strong> hola@cafeteriaaroma.com</li>
+      </ul>
+
+      <p>
+        Síguenos en redes:
+        <a href="https://instagram.com" target="_blank">Instagram</a> ·
+        <a href="https://facebook.com" target="_blank">Facebook</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>Envíanos un mensaje</h2>
+      <p>
+        Completa el formulario y te responderemos lo antes posible.
+      </p>
+
+      <form id="form-contacto" novalidate>
+        <div class="campo">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required>
+        </div>
+
+        <div class="campo">
+          <label for="asunto">Asunto</label>
+          <select id="asunto" name="asunto">
+            <option value="pregunta">Pregunta general</option>
+            <option value="reserva">Reservar una mesa</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="personas">Número de personas (si es una reserva)</label>
+          <select id="personas" name="personas">
+            <option value="1">1 persona</option>
+            <option value="2">2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+            <option value="5+">5 o más personas</option>
+          </select>
+        </div>
+
+        <fieldset class="campo">
+          <legend>¿Cómo prefieres que te contactemos?</legend>
+
+          <div class="opcion-radio">
+            <input type="radio" id="contacto-correo" name="metodo-contacto" value="correo" checked>
+            <label for="contacto-correo">Por correo electrónico</label>
+          </div>
+
+          <div class="opcion-radio">
+            <input type="radio" id="contacto-telefono" name="metodo-contacto" value="telefono">
+            <label for="contacto-telefono">Por teléfono</label>
+          </div>
+
+          <div class="opcion-radio">
+            <input type="radio" id="contacto-whatsapp" name="metodo-contacto" value="whatsapp">
+            <label for="contacto-whatsapp">Por WhatsApp</label>
+          </div>
+        </fieldset>
+
+        <div class="campo">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn">Enviar mensaje</button>
+
+        <!-- Este párrafo está vacío a propósito: en el Módulo 2,
+             JavaScript va a escribir aquí un mensaje de confirmación
+             o de error, sin recargar la página. -->
+        <p id="form-mensaje"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Cafetería Aroma <br>
+      Calle 5ta, Ciudad de Panamá <br>
+      Tel: 6000-0000
+    </p>
+    <p>
+      Síguenos: <a href="https://instagram.com" target="_blank">Instagram</a> ·
+      <a href="https://facebook.com" target="_blank">Facebook</a>
+    </p>
+    <p>&copy; 2026 Cafetería Aroma. Todos los derechos reservados.</p>
+    <p class="creditos">
+      <a href="https://www.flaticon.es/iconos-gratis/cafeteria" title="cafetería iconos">
+        Cafetería iconos creados por Magnific - Flaticon
+      </a>
+    </p>
+  </footer>
+<script src="js/app.js" defer></script>
+</body>
+</html>

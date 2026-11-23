@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- indica qué codificación de caracteres usa la página (para que tildes, ñ, emojis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- controla cómo se adapta la página a distintos dispositivos -->
+  <title>Cafetería Aroma — Inicio</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="imagen/icons8-estrella-64.png">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header>
+    <h1>Cafetería Aroma</h1>
+    <button class="menu-toggle">☰ Menú</button>
+    <nav>
+      <ul>
+        <li><a href="index.html" aria-current="page">Inicio</a></li>
+        <li><a href="menu-bootstrap.html">Menú</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="contacto-bootstrap.html">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Bienvenido a Aroma</h2>
+      <p>
+        En <strong>Cafetería Aroma</strong> preparamos café de especialidad
+        todos los días. Cada taza es <em>hecha a mano</em>, con granos
+        seleccionados de productores locales.
+      </p>
+
+      <canvas id="sello-promo" width="140" height="140"></canvas>
+
+      <figure>
+        <img src="imagen/cafeteria.png"
+             alt="Interior de la cafetería Aroma con mesas de madera">
+        <figcaption>Nuestro espacio en el centro de la ciudad.</figcaption>
+      </figure>
+
+      <p>
+        ¿Tienes hambre? Echa un vistazo a
+        <a href="menu.html">nuestro menú completo</a>.
+      </p>
+
+      <audio id="musica-ambiente" loop>
+        <source src="audio/cafemusic.mp3" type="audio/mpeg">
+      </audio>
+      <button class="btn boton-musica">🎵 Reproducir música</button>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Cafetería Aroma <br>
+      Calle 5ta, Ciudad de Panamá <br>
+      Tel: 6000-0000
+    </p>
+    <p>
+      Síguenos: <a href="https://instagram.com" target="_blank">Instagram</a> ·
+      <a href="https://facebook.com" target="_blank">Facebook</a>
+    </p>
+    <p>&copy; 2026 Cafetería Aroma. Todos los derechos reservados.</p>
+  </footer>
+<script src="js/app.js" defer></script>
+</body>
+</html>

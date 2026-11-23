@@ -1,0 +1,523 @@
+/* ===========================
+   1. Paleta y tipografía base
+=========================== */
+
+/* :root = selector especial que representa a toda la página.
+   Aquí declaramos variables CSS (--nombre) para no repetir
+   colores por todo el archivo. Si cambian un valor aquí,
+   cambia en TODOS los lugares donde se use var(--nombre). */
+:root {
+  --color-fondo: #FDF8F3;   /* fondo general de la página */
+  --color-texto: #3B2A20;   /* color del texto normal */
+  --color-marca: #8B5E3C;   /* color principal de la marca */
+  --color-acento: #D98E48;  /* color para resaltar (links, bordes, hover) */
+  --color-tarjeta: #FFFFFF; /* fondo de tarjetas y elementos "flotantes" */
+}
+
+/* Selector universal (*): aplica a TODOS los elementos.
+   box-sizing: border-box hace que el padding y el border se
+   cuenten DENTRO del ancho definido, no se sumen aparte.
+   Casi siempre se pone esta regla al inicio de cualquier CSS. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;                                   /* quita el margen por defecto del navegador */
+  font-family: "Segoe UI", Arial, sans-serif;   /* fuente principal, con 2 alternativas de respaldo */
+  color: var(--color-texto);                    /* usa la variable de color de texto */
+  background-color: var(--color-fondo);         /* usa la variable de color de fondo */
+  line-height: 1.6;                             /* separación entre líneas, para que se lea cómodo */
+}
+
+/* Selector agrupado: la misma declaración para h1, h2 y h3 a la vez,
+   en vez de repetir la regla tres veces. */
+h1, h2, h3 {
+  font-family: Georgia, serif; /* fuente distinta para los títulos, más elegante */
+  color: var(--color-marca);
+}
+
+/* Cada nivel de título tiene su propio tamaño (jerarquía visual) */
+h1 { font-size: 28px; margin: 0; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; }
+
+/* ===========================
+   2. Header con Flexbox
+=========================== */
+
+/* display:flex pone logo y nav en fila (en vez de uno debajo del otro).
+   justify-content:space-between los separa a los extremos.
+   align-items:center los alinea verticalmente entre sí. */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-tarjeta);
+  padding: 16px 32px;                      /* 16px arriba/abajo, 32px a los lados */
+  border-bottom: 7px solid var(--color-acento); /* línea solo abajo del header */
+}
+
+/* La lista de enlaces del menú también es un contenedor flex,
+   para poner los <li> en fila en vez de apilados. */
+nav ul {
+  display: flex;
+  gap: 24px;          /* espacio entre cada link, sin calcular márgenes */
+  list-style: none;   /* quita los puntos de viñeta de la lista */
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;   /* quita el subrayado azul por defecto del link */
+  color: var(--color-texto);
+  font-weight: bold;
+}
+
+/* Pseudo-clase :hover → aplica SOLO mientras el mouse está encima */
+nav a:hover {
+  color: var(--color-acento);
+}
+
+/* Selector de atributo: aplica a cualquier <a> que tenga
+   aria-current="page" en el HTML (lo ponemos manualmente en
+   cada página, en el link que corresponde a esa página).
+   Así resaltamos "dónde estoy parado" dentro del menú. */
+nav a[aria-current="page"] {
+  color: var(--color-acento);
+  border-bottom: 2px solid var(--color-acento);
+  padding-bottom: 2px;
+}
+
+/* Por defecto (pantallas grandes) el botón no se ve */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  color: inherit;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block; /* ahora sí se ve el botón en pantallas pequeñas */
+  }
+
+  nav ul {
+    display: none; /* el menú empieza oculto en móvil */
+  }
+
+  nav ul.activo {
+    display: flex; /* JS agrega esta clase y el menú aparece */
+    flex-direction: column;
+  }
+}
+
+/* El header necesita position: relative para que el menú 
+   se pueda posicionar "colgando" justo debajo de él */
+header {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  nav ul.activo {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;        /* lo coloca justo debajo del header */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  nav ul.activo li {
+    width: 100%;
+  }
+
+  nav ul.activo li a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+}
+
+/* ===========================
+   3. Secciones y modelo de caja
+=========================== */
+
+section {
+  max-width: 900px;   /* el contenido nunca se estira más de 900px de ancho */
+  margin: 40px auto;  /* 40px arriba/abajo; "auto" a los lados = centra el bloque */
+  padding: 24px;       /* espacio interno alrededor del contenido */
+}
+
+figure {
+  margin: 20px 0;
+  text-align: center;  /* centra el <figcaption> */
+}
+
+/* Selector descendiente: solo las <img> que están DENTRO de un <figure> */
+figure img {
+  max-width: 100%;                          /* nunca se sale de su contenedor */
+  border-radius: 8px;                       /* esquinas redondeadas */
+  border: 4px solid var(--color-tarjeta);   /* efecto "marco de foto" */
+}
+
+figcaption {
+  font-size: 14px;
+  color: var(--color-marca);
+  margin-top: 8px;
+}
+
+/* El <hr> trae un estilo feo por defecto (línea 3D).
+   Lo reseteamos con border:none y dibujamos nuestra propia
+   línea, más sutil, con border-top. */
+hr {
+  border: none;
+  border-top: 1px solid #E0D2C3;
+  max-width: 900px;
+  margin: 0 auto; /* centrada igual que las secciones */
+}
+
+/* ===========================
+   4. Tarjetas de producto (Flexbox)
+=========================== */
+
+/* Selector de id (#menu): apunta a un único elemento en la página.
+   flex-wrap:wrap permite que las tarjetas salten a una segunda fila
+   cuando ya no caben en el ancho de la pantalla. */
+#menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* El título "Nuestro menú" está dentro del mismo contenedor flex
+   que las tarjetas. width:100% lo obliga a ocupar toda la fila
+   él solo, en vez de acomodarse al lado de las tarjetas. */
+#menu h2 {
+  width: 100%;
+  text-align: center;
+}
+
+/* Selector de clase (.producto): esta es la regla que convierte
+   un <article> normal en una TARJETA. Se repite en cada producto
+   del HTML, pero está definida una sola vez aquí. */
+.producto {
+  background-color: var(--color-tarjeta);
+  border: 1px solid #E0D2C3;
+  border-radius: 10px;
+  padding: 16px;      /* separa el contenido de los bordes de la tarjeta */
+  width: 260px;       /* todas las tarjetas miden lo mismo */
+  text-align: center;
+}
+
+.producto img {
+  width: 100%;         /* la imagen llena el ancho de su tarjeta */
+  border-radius: 6px;
+}
+
+/* Estilo aplicado por JavaScript con classList.add()
+   al pasar el mouse sobre una tarjeta (evento mouseover). */
+.resaltado {
+  border-color: #1B98E0;
+  box-shadow: 0 4px 10px rgba(27, 152, 224, 0.25);
+}
+
+.producto .mini {
+  cursor: pointer;
+}
+
+.producto .mini:hover {
+  opacity: 0.8;
+}
+
+/* ===========================
+   5. Aside / Horario
+=========================== */
+
+/* border-left = un borde grueso SOLO del lado izquierdo.
+   Es un recurso típico para "cajas de aviso" o contenido
+   destacado: la franja de color le dice al ojo "esto es aparte". */
+aside {
+  background-color: var(--color-tarjeta);
+  border-left: 5px solid var(--color-acento);
+  padding: 20px;
+  border-radius: 6px;
+}
+
+/* <dt> = término de la lista de definición (ej. "Lunes a viernes") */
+dt {
+  font-weight: bold;
+  color: var(--color-marca);
+}
+
+/* <dd> = descripción del término (ej. el horario en sí).
+   margin: 0 0 10px 0 → orden: arriba, derecha, abajo, izquierda.
+   Solo dejamos espacio ABAJO, para separar cada par dt/dd del siguiente. */
+dd {
+  margin: 0 0 10px 0;
+}
+
+/* ===========================
+   6. Footer
+=========================== */
+
+/* El footer invierte la paleta: fondo oscuro con texto claro,
+   en vez del fondo claro del resto de la página. Es un contraste
+   típico para que el ojo entienda "aquí termina el contenido". */
+footer {
+  background-color: var(--color-marca);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 24px;
+}
+
+/* Selector descendiente: solo los links DENTRO del footer,
+   no todos los links de la página. */
+footer a {
+  color: var(--color-acento);
+}
+
+/* ===========================
+   7. Formulario de contacto
+   (base para JavaScript en el Módulo 2)
+=========================== */
+
+/* Caja blanca que envuelve todo el formulario, separada
+   del resto del contenido igual que las tarjetas de producto. */
+form {
+  max-width: 500px;
+  margin: 24px 0;
+  background-color: var(--color-tarjeta);
+  padding: 24px;
+  border-radius: 10px;
+  border: 1px solid #E0D2C3;
+}
+
+/* Cada par label + input se agrupa en un div.campo,
+   para poder darles espacio uniforme entre ellos. */
+.campo {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;            /* el label ocupa su propia línea, arriba del campo */
+  font-weight: bold;
+  color: var(--color-marca);
+  margin-bottom: 6px;
+}
+
+/* Selector agrupado: mismo estilo base para los tres tipos
+   de campo (texto/correo, lista desplegable y área de texto). */
+input,
+select,
+textarea {
+  width: 100%;                 /* ocupa todo el ancho del formulario */
+  padding: 10px 12px;
+  border: 1px solid #E0D2C3;
+  border-radius: 6px;
+  font-family: inherit;        /* sin esto, los inputs usan la fuente del sistema, no la del sitio */
+  font-size: 16px;
+  color: var(--color-texto);
+}
+
+/* Pseudo-clase :focus → aplica mientras el campo está
+   seleccionado (el usuario está escribiendo ahí). Quitamos
+   el contorno azul por defecto del navegador y ponemos
+   nuestro propio color de acento en el borde. */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-acento);
+}
+
+textarea {
+  resize: vertical;  /* solo permite agrandar el área de texto hacia abajo, no a los lados */
+}
+
+/* Un <fieldset> agrupa varios controles relacionados (aquí, los
+   radio botones) y <legend> es su "título". Es la forma semántica
+   correcta de agrupar un conjunto de opciones — mejor que usar
+   un <div> con un <p> encima. Le quitamos el borde y el padding
+   que el navegador le pone por defecto, para que se vea como
+   el resto de los campos del formulario. */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 18px 0;
+}
+
+legend {
+  font-weight: bold;
+  color: var(--color-marca);
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+/* Cada fila de radio botón: el circulito y su etiqueta,
+   uno al lado del otro (por eso display:flex aquí también). */
+.opcion-radio {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 8px;
+}
+
+/* Dentro de una fila de radio, el label NO debe ocupar toda
+   la fila como los labels normales del formulario (por eso
+   sobrescribimos display:block por display:inline aquí). */
+.opcion-radio label {
+  display: inline;
+  font-weight: normal;
+  color: var(--color-texto);
+  margin-bottom: 0;
+}
+
+/* Los radio botones NO deben estirarse a width:100% como los
+   demás campos (esa regla general los deformaría), así que
+   los excluimos con este selector más específico.
+   accent-color pinta el circulito del radio con nuestro color
+   de acento en vez del azul por defecto del navegador. */
+input[type="radio"] {
+  width: auto;
+  accent-color: var(--color-acento);
+}
+
+/* Clase reutilizable para botones de acción del sitio. */
+.btn {
+  display: inline-block;
+  background-color: var(--color-acento);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;  /* mano al pasar el mouse, aunque sea un <button> */
+}
+
+.btn:hover {
+  background-color: var(--color-marca);
+}
+
+.boton-video {
+  display: block;
+  margin: 12px auto 24px;
+}
+
+video {
+  display: block;
+  margin: 12px auto;
+}
+
+/* Vacío por ahora: en el Módulo 2, JavaScript va a mostrar
+   aquí un mensaje de éxito o de error después de enviar. */
+#form-mensaje {
+  margin-top: 14px;
+  font-weight: bold;
+}
+
+#form-mensaje {
+  opacity: 0;  
+  transition: opacity 4s ease;
+}
+/* ===========================
+   8. Mensajes de validación (JavaScript)
+   Estas clases las activa JavaScript con
+   classList.add()/remove() según el resultado
+   de validar el formulario de contacto.
+=========================== */
+.exito {
+  color: green;
+  font-weight: bold;
+}
+
+.error {
+  color: crimson;
+  font-weight: bold;
+}
+
+#form-mensaje.error,
+#form-mensaje.exito {
+  opacity: 1;
+}
+
+#sello-promo {
+  display: block;
+  margin: 16px auto;
+}
+
+/* Ajustes para la rejilla de Bootstrap en el menú */
+#menu .row .card.producto {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+#menu .card-img-top {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+/* Ajustes para la barra de navegación de Bootstrap */
+header .navbar-nav {
+  gap: 0 !important;
+}
+
+header .navbar-nav li {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+
+header .navbar-nav .nav-link {
+  display: block;
+  padding: 0.5rem 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* En pantallas medianas y grandes, los enlaces van en fila: se separan */
+@media (min-width: 768px) {
+  header .navbar-collapse {
+    flex-grow: 1 !important;          /* el panel ocupa todo el ancho disponible */
+    justify-content: flex-end !important;
+  }
+  header .navbar-nav {
+    gap: 1.5rem !important;
+    margin-left: auto !important;     /* empuja los enlaces a la derecha */
+  }
+}
+/* El nav de Bootstrap debe ocupar todo el ancho del header,
+   para que ms-auto pueda empujar los enlaces a la derecha */
+header .navbar {
+  flex: 1;
+  padding: 0;
+}
+
+/* Los campos de Bootstrap usan el color de acento de la marca */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 0.25rem rgba(217, 142, 72, 0.25);
+}
